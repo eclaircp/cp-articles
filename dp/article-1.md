@@ -28,7 +28,7 @@ using namespace std;
 
 int main() {
 	
-	string s;
+    string s;
     cin >> s;
     
     string t = "chokudai";
