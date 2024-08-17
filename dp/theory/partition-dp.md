@@ -60,6 +60,12 @@ public:
 ```cpp
 // tabulation
 
+/*
+we first calculate the min number of operations required for segment of matrices of size 1,
+which will all be 0 (base case)
+then, we calculate the answers for segment of matrices from 2 to n-1 matrices
+*/
+
 class Solution{
     
     vector<vector<int>> dp;
