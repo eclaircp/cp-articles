@@ -18,6 +18,8 @@ The new matrices formed after diving i.....j into i...k and k+1....j will have d
 DP State: dp[i][j] = minimum number of operations required for the matrices i.....j  
 Transtition: dp[i][j] = min (dp[i][k] + dp[k+1][j] + arr[i-1]*arr[k]*arr[j]), i<=k<j
 
+#### Code
+
 ```cpp
 // memoization
 
