@@ -14,7 +14,7 @@ Given an array of the dimensions of a series of matrices, which can be multiplie
 Let the given array be arr[], then the dimensions of the i<sup>th</sup> matrix is arr[i-1] x arr[i], where i>=1.
 <br><br>
 We'll define a function f(i, j), which will return the minimum number of operations required to for the matrices i to j.  
-This can be divided into sub-problems f(i, k) and f(k+1, j), where i<=k<j and the base case being i=j, whenin we return 0, as no operation is required for a sigle matrix.  
+This can be divided into sub-problems f(i, k) and f(k+1, j), where i<=k<j and the base case being i=j, wherein we return 0, as no operation is required for a sigle matrix.  
 The new matrices formed after diving i.....j into i...k and k+1....j will have dimensions arr[i-1] x arr[k] and arr[k] x arr[j]. The number of operations required to multiply these two newly formed matrices is arr[i-1] x arr[k] x arr[j].
 <br><br>
 DP State: dp[i][j] = minimum number of operations required for the matrices i.....j  
@@ -106,6 +106,17 @@ public:
 
 #### Gist of Question
 Given the length of a stick and an array of integers representing the positions where to make cut, we need to minimize the cost of cutting the stick at all those positions such that the cost of making a cut at a particular position is equal to the length of the sub-stick one is making a cut on.
+
+#### Approach
+Let the given array of positions be cuts[], we'll sort it and store it in another array arr[] then, push 0 in the front and the length of the stick n at the back.  
+This will make sure that if we cut the stick at arr[i], then the sub-problems of cutting the sticks we got are independent of each other.
+<br><br>
+Let f(i, j) be the minimum cost to cut the stick between arr[i] and arr[j]  
+This can be divided into sub-problems f(i, k) and f(k, j), where i<k<j and the base case being j-i<=1, wherein we return 0, as no cost is required for cutting a stick of length 0 and between two adjacent cut positions we can't make a cut. 
+<br><br>
+DP State: DP State: dp[i][j] = minimum cost of cutting the stick between arr[i] and arr[j]  
+Transtition: dp[i][j] = min (dp[i][k] + dp[k][j] + arr[j] - arr[i]), i<k<j
+
 
 #### Code
 
