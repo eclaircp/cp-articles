@@ -8,7 +8,9 @@ A linear data structure will be given and we would have to divide it into multip
 ### Matrix Chain Multiplication
 
 #### Gist of Question
-Given an array of the dimensions of a series of matrices, which can be multiplied in the sequence in which they are given, we need to minimize the number of operations required to get the product of the matrices.  
+Given an array of the dimensions of a series of matrices, which can be multiplied in the sequence in which they are given, we need to minimize the number of operations required to get the product of the matrices.
+
+#### Approach
 Let the given array be arr[], then the dimensions of the i<sup>th</sup> matrix is arr[i-1] x arr[i], where i>=1.
 <br><br>
 We'll define a function f(i, j), which will return the minimum number of operations required to for the matrices i to j.  
@@ -96,6 +98,68 @@ public:
         
         return dp[1][n-1];
         
+    }
+};
+```
+
+### Minimum Cost to Cut a Stick
+
+#### Gist of Question
+Given the length of a stick and an array of integers representing the positions where to make cut, we need to minimize the cost of cutting the stick at all those positions such that the cost of making a cut at a particular position is equal to the length of the sub-stick one is making a cut on.
+
+#### Code
+
+```cpp
+// memoization
+
+class Solution {
+
+    int m;
+    vector<vector<int>> dp;
+    vector<int> arr;
+ 
+    int f(int i, int j) {
+
+        if(j-i<=1) {
+            return 0;
+        }
+
+        if(dp[i][j] != -1) {
+            return dp[i][j];
+        }
+
+        int ans = INT_MAX;
+
+        for(int k=i+1; k<j; k++) {
+            ans = min(ans, arr[j] - arr[i] + f(i, k) + f(k, j));
+        }
+
+        if(ans == INT_MAX) {
+            ans = 0;
+        }
+
+        return dp[i][j] = ans;
+
+    }
+
+public:
+    int minCost(int n, vector<int>& cuts) {
+
+        arr.push_back(0);
+
+        for(auto ele : cuts) {
+            arr.push_back(ele);
+        }
+
+        arr.push_back(n);
+
+        sort(arr.begin(), arr.end());
+
+        m = arr.size();
+
+        dp.resize(m, vector<int> (m, -1));
+
+        return f(0, m-1);
     }
 };
 ```
