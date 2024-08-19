@@ -134,10 +134,6 @@ class Solution {
             ans = min(ans, arr[j] - arr[i] + f(i, k) + f(k, j));
         }
 
-        if(ans == INT_MAX) {
-            ans = 0;
-        }
-
         return dp[i][j] = ans;
 
     }
@@ -160,6 +156,56 @@ public:
         dp.resize(m, vector<int> (m, -1));
 
         return f(0, m-1);
+    }
+};
+```
+
+```cpp
+// tabulation
+
+class Solution {
+
+    int m;
+    vector<vector<int>> dp;
+    vector<int> arr;
+
+public:
+    int minCost(int n, vector<int>& cuts) {
+
+        arr.push_back(0);
+
+        for(auto ele : cuts) {
+            arr.push_back(ele);
+        }
+
+        arr.push_back(n);
+
+        sort(arr.begin(), arr.end());
+
+        m = arr.size();
+
+        dp.resize(m, vector<int> (m));
+
+        for(int i=0; i<m; i++) {
+            dp[i][i] = 0;
+            if(i+1<m) dp[i][i+1] = 0;
+        }
+
+        for(int len=2; len<m; len++) {
+            for(int i=0; i<m-len; i++) {
+                int j = i+len;
+
+                int ans = INT_MAX;
+
+                for(int k=i+1; k<j; k++) {
+                    ans = min(ans, dp[i][k] + dp[k][j] + arr[j]-arr[i]);
+                }
+
+                dp[i][j] = ans;
+            }
+        }
+
+        return dp[0][m-1];
     }
 };
 ```
